@@ -54,3 +54,16 @@ Test datasets can be downloaded (via ~curl~) from the FTPS server
 #+begin_src bash
   cd data && FTPPASS="..." ./download_simpsons.sh
 #+end_src
+
+
+* How to train the model
+
+In ~ezigzag/train.py~ a Variational Autoencoder is trained on the
+~simpsons~ dataset. Edit the file as you wish (especially the VAE
+keyword arguments) and run it on a device as powerful as possible
+(~mps~ for macOS M1-4 GPUs, ~cuda~ for Nvidia GPUs, or ~cpu~ for a
+CPU) with e.g.
+
+#+begin_src bash
+  python ezigzag/train.py --device cpu
+#+end_src

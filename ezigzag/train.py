@@ -45,8 +45,8 @@ def train_model(**kwargs):
     model = VAE(
         dimensions=2,
         in_channels=3,
-        n_channels=16,
-        latent_dim=64,
+        n_channels=32,
+        latent_dim=4,
         block_out_channel_mults=(2, 2),
         down_block_types=("EncoderDownBlock", "EncoderDownBlock"),
         mid_block_type="EncoderMidBlock",
@@ -148,7 +148,6 @@ if __name__ == "__main__":
     # Trigger model training
     config["ckpt_dir"].mkdir(parents=True, exist_ok=True)
     config["results_dir"].mkdir(parents=True, exist_ok=True)
-    config["device"] = "mps"  # "cuda" or "cpu"
     config["loss"] = ["MSE", "ELBO"]
     config["metrics"] = []
     config["verbose"] = True
