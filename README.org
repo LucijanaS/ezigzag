@@ -1,0 +1,56 @@
+#+AUTHOR: phdenzel
+#+TITLE: ezigzag
+#+DATE: 2024-11-17 Sun
+#+OPTIONS: author:nil title:t date:nil timestamp:nil toc:nil num:nil \n:nil
+
+
+* Requirements
+
+- Python ~>= 3.9~
+
+For a list of python packages, inspect the ~pyproject.toml~ file, or
+run
+#+begin_src bash
+python -c "import toml; print('\n'.join(pkg for pkg in toml.load('pyproject.toml')['project']['dependencies']))"
+#+end_src
+
+
+* Install
+
+It is recommended to install and run the ~ezigzag~ project in a
+virtual environment.
+
+
+** Virtualenv
+
+The easiest method to install a virtual environment is
+#+begin_src bash
+  virtualenv venv
+  source venv/bin/activate
+  pip install --upgrade pip
+#+end_src
+
+
+** Conda environment
+
+If ~conda~ is already installed, you can alternatively use
+#+begin_src bash
+  conda create -n ezigzag python=3.12 -y
+  conda activate ezigzag
+#+end_src
+
+
+** Install the project
+
+Install the project in editable mode with
+#+begin_src bash
+pip install -e .
+#+end_src
+
+
+** Datasets
+
+Test datasets can be downloaded (via ~curl~) from the FTPS server
+#+begin_src bash
+  cd data && FTPPASS="..." ./download_simpsons.sh
+#+end_src

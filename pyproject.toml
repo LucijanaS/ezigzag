@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ezigzag"
+dynamic = ["version"]
+description = "Modeling the zig-zag lens with deep learning"
+readme = {file = "README.org", content-type = "text/plain"}
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+authors = [
+  {name = "Philipp Denzel", email = "phdenzel@gmail.com"},
+]
+keywords = ["deep learning", "gravitational lens modeling", "zig-zag lens"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Topic :: Security"]
+
+dependencies = [
+  "numpy",
+  "torch",
+  "torchvision",
+  "torcheval",
+  "tqdm",
+  "GitPython",
+  "chuchichaestli @ git+https://github.com/CAIIVS/chuchichaestli.git@32-vae",
+]
+  
+[project.optional-dependencies]
+utils = ["jupyter"]
+lsp = ["python-lsp-server[all]", "ruff", "python-lsp-ruff", "pylsp-mypy", "pylsp-rope", "python-lsp-black"]
+
+[project.urls]
+Homepage = "https://github.com/LucijanaS/ezigzag.git"
+Repository = "https://github.com/LucijanaS/ezigzag.git"
+Issues = "https://github.com/LucijanaS/ezigzag.git"
+
+# [project.scripts]
+# ezigzag = "ezigzag.__main__:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "ezigzag.__version__"}
+
+[tool.setuptools.packages.find]
+exclude = ["data", "notebooks", "scripts", "checkpoints", "results", "wandb"]
+
+
+# Linting, flaking, etc.
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "D"]  # "D" includes pydocstyle rules
+ignore = ["D200", "D212", "D415"]
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+warn_return_any = true
+warn_unused_configs = true
+
+# exclude = [
+#     '^file1\.py$',  # TOML literal string (single-quotes, no escaping necessary)
+#     "^file2\\.py$",  # TOML basic string (double-quotes, backslash and other characters need escaping)
+# ]
