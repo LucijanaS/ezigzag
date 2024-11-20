@@ -71,16 +71,16 @@ CPU) with e.g.
 
 ** Tips
 
-- Higher batch sizes e.g. ~--batch-size 8~, result in faster the training
+- Higher batch sizes e.g. ~--batch-size 8~, result in faster training
 - Increasing the number of down and up blocks in the VAE (manually) likely
   results in better image recostructions at the cost of compute, e.g.
   ~down_block_types=3*("EncoderDownBlock",)~,
   ~up_block_types=3*("EncoderUpBlock",)~, and
   ~block_out_channel_mults=3*(2,)~.
-- In the initial epochs ~train_ELBO~ (the KL divergence) will be high,
+- In the initial epochs, ~train_ELBO~ (the KL divergence) will be high,
   and should go below the ~train_MSE~ (the L2 loss) term. This
-  indicates that the regularization of the latent space works i.e. the
-  likelihood of neighboring points are close to Gaussian.
+  indicates that the regularization of the latent space works, i.e. the
+  likelihoods of neighboring points are close to Gaussian.
 - ~PSNR~ is a evaluation metric (higher is better) in logarithmic
   scale and measures the reconstruction quality above the noise level.
   This value should increase with time.
