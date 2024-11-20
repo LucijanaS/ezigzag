@@ -118,24 +118,24 @@ def train_model(**kwargs):
             write_ckpt(kwargs["ckpt_dir"], model, optimizer, scheduler, epoch=epoch)
         write_ckpt(kwargs["ckpt_dir"], model, optimizer, scheduler, epoch=epoch, as_latest=True)
 
-        # Evaluation
-        model.eval()
-        dataloader.eval()
-        with torch.no_grad():
-            iterator = dataloader.tqdm(desc="Evaluation")
-            for iteration, batch in iterator:
-                data = batch[0].to(device)
-                pred = model(data)
-                metrics.update(pred, data)
-            metrics.compute()
-            val_loss = {"epoch": epoch} | metrics.results()
-            metrics.reset()
-            write_csv_log(val_loss, _file=eval_csv)
-            if verbose:
-                print("Evaluation: ", "   ".join([f"{k}: {v}" for k, v in val_loss.items()]))
-        t_epoch_fin = time.time()
-        if verbose:
-            print(f"Epoch: {epoch} - Eval time: {t_epoch_fin - t_mid:4.2f}s")
+        # # Evaluation
+        # model.eval()
+        # dataloader.eval()
+        # with torch.no_grad():
+        #     iterator = dataloader.tqdm(desc="Evaluation")
+        #     for iteration, batch in iterator:
+        #         data = batch[0].to(device)
+        #         pred = model(data)
+        #         metrics.update(pred, data)
+        #     metrics.compute()
+        #     val_loss = {"epoch": epoch} | metrics.results()
+        #     metrics.reset()
+        #     write_csv_log(val_loss, _file=eval_csv)
+        #     if verbose:
+        #         print("Evaluation: ", "   ".join([f"{k}: {v}" for k, v in val_loss.items()]))
+        # t_epoch_fin = time.time()
+        # if verbose:
+        #     print(f"Epoch: {epoch} - Eval time: {t_epoch_fin - t_mid:4.2f}s")
     t_fin = time.time()
     train_csv.close()
     eval_csv.close()
