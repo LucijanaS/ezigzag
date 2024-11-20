@@ -83,7 +83,7 @@ def parse_args(**kwargs) -> dict:
         help="Dataset split ratios (need to add up to 1)"
     )
     parser.add_argument(
-        "-b", "--batch_size",
+        "-b", "--batch-size",
         type=int,
         default=kwargs.get("batch_size", 1),
         help="Batch size for the dataloader."
@@ -121,15 +121,15 @@ def parse_args(**kwargs) -> dict:
         help="Number of output features for each hidden layer"
     )
     parser.add_argument(
-        "--activations",
-        type=lambda s: s.split(','),
-        default=kwargs.get("activations", "silu"),
+        "--activation",
+        type=str,
+        default=kwargs.get("activation", "silu"),
         help="Activation name(s) for each MLP layer"
     )
     parser.add_argument(
         "--dropout",
         type=float,
-        default=kwargs.get("dropout", 0),
+        default=kwargs.get("dropout", 0.1),
         help="Dropout rate in between each layer"
     )
 
@@ -199,13 +199,13 @@ def parse_args(**kwargs) -> dict:
     parser.add_argument(
         "-e", "--n_epochs", "--epochs",
         type=int,
-        default=kwargs.get("n_epochs", 100),
+        default=kwargs.get("n_epochs", 10),
         help="Index of starting epoch"
     )
     parser.add_argument(
         "--freq-ckpt", "--freq-checkpoints", "--t-ckpt", "--t-checkpoints",
         type=int,
-        default=kwargs.get("freq_ckpt", 10),
+        default=kwargs.get("freq_ckpt", 5),
         help="Frequency with which to print to stdout [epochs]"
     )
     parser.add_argument(

@@ -7,7 +7,14 @@ Collection of loss functionality and evaluation metrics
 """
 import torch
 from torch import nn
-from torcheval.metrics import MeanSquaredError, R2Score, Metric
+from torcheval.metrics import (
+    MeanSquaredError,
+    R2Score,
+    PeakSignalNoiseRatio,
+    StructuralSimilarity,
+    FrechetInceptionDistance,
+    Metric
+)
 from typing import Optional, Any
 
 
@@ -202,13 +209,15 @@ class EvalMetrics:
     metrics_map: dict[str, type[Metric]] = {
         "MSE": MeanSquaredError,
         "R2": R2Score,
-        # "PSNR": NotImplemented,
-        # "SSIM": NotImplemented,
+        "PSNR": PeakSignalNoiseRatio,
+        "SSIM": StructuralSimilarity,
+        "FID": FrechetInceptionDistance,
     }
 
     metrics_kwargs: dict[str, Any] = {
         "multioutput": "uniform_average",
         "num_regressors": 0,
+        "data_range": 1.0,
     }
     
     def __init__(
@@ -284,8 +293,17 @@ class EvalMetrics:
 
     def update(self, input: torch.Tensor, target: torch.Tensor):
         """Update states with the prediction and ground truth values."""
-        for fn in self.fns:
-            fn.update(input.squeeze(), target.squeeze())
+        if len(input.shape) < 4:
+            for fn in self.fns:
+                fn.update(input.squeeze(), target.squeeze())
+        else:
+            for k, fn in zip(self.keys, self.fns):
+                if k in ["FID"]:
+                    fn.update(input, True)
+                    fn.update(target, False)
+                if k in ["SSIM"]:
+                    print(input.shape, target.shape)
+                fn.update(input, target)
 
     def compute(self) -> list[torch.Tensor]:
         """Return the computed metrics"""

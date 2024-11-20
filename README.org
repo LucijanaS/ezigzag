@@ -67,3 +67,52 @@ CPU) with e.g.
 #+begin_src bash
   python ezigzag/train.py --device cpu
 #+end_src
+
+
+** Tips
+
+- Higher batch sizes e.g. ~--batch-size 8~, result in faster the training
+- Increasing the number of down and up blocks in the VAE (manually) likely
+  results in better image recostructions at the cost of compute, e.g.
+  ~down_block_types=3*("EncoderDownBlock",)~,
+  ~up_block_types=3*("EncoderUpBlock",)~, and
+  ~block_out_channel_mults=3*(2,)~.
+- In the initial epochs ~train_ELBO~ (the KL divergence) will be high,
+  and should go below the ~train_MSE~ (the L2 loss) term. This
+  indicates that the regularization of the latent space works i.e. the
+  likelihood of neighboring points are close to Gaussian.
+- ~PSNR~ is a evaluation metric (higher is better) in logarithmic
+  scale and measures the reconstruction quality above the noise level.
+  This value should increase with time.
+
+
+* After training
+
+Load a trained model (here with ID ~febcd77b~ as an example) with the
+~load_ckpt~ function, e.g.
+
+#+begin_src python
+  model = VAE(
+      dimensions=2,
+      in_channels=3,
+      n_channels=32,
+      latent_dim=4,
+      res_act_fn=kwargs["activation"],
+      res_dropout=kwargs["dropout"],
+      block_out_channel_mults=(2, 2),
+      down_block_types=("EncoderDownBlock", "EncoderDownBlock"),
+      mid_block_type="EncoderMidBlock",
+      up_block_types=("EncoderUpBlock", "EncoderUpBlock"),
+  )
+  model, _ = load_ckpt(
+      "checkpoints/febcd77b_epoch_latest.pth",
+      model
+  )
+  reconstructed_image = model.decode(torch.randn((1, 8, 128, 128)))\
+     .detach()\
+     .cpu()\
+     .squeeze()\
+     .permute(1, 2, 0)\
+     .numpy()
+#+end_src
+
