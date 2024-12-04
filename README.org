@@ -58,7 +58,7 @@ Test datasets can be downloaded (via ~curl~) from the FTPS server
 
 *** IllustrisTNG projections
 
-A subset of the IllustrisTNG galaxy map projection dataset (~6GB) can be downloaded (via ~curl~) from the FTPS server
+A subset of the IllustrisTNG galaxy map projection dataset (around 6GB) can be downloaded (via ~curl~) from the FTPS server
 #+begin_src bash
   cd data && FTPPASS="..." ./download_tng2D_subset.sh
 #+end_src
