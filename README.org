@@ -56,6 +56,32 @@ Test datasets can be downloaded (via ~curl~) from the FTPS server
 #+end_src
 
 
+*** IllustrisTNG projections
+
+A subset of the IllustrisTNG galaxy map projection dataset (~6GB) can be downloaded (via ~curl~) from the FTPS server
+#+begin_src bash
+  cd data && FTPPASS="..." ./download_tng2D_subset.sh
+#+end_src
+
+
+For loading samples from the dataset, use
+#+begin_src python
+  from ezigzag import parse_args
+  from ezigzag.data import HDF5Dataset, TrainTestDataLoader
+
+  ds = HDF5Dataset("./data", meta_groups="**/metadata/*", collate=True)
+  dl = TrainTestDataLoader(ds, ds, batch_size=1, shuffle=False)
+  for i, batch in dl.tqdm():
+
+        maps = batch[0]  # batched mass maps of shape (batch_size, 512, 512)
+        maps = maps.detach().cpu().numpy()  # to convert to numpy arrays
+        info = batch[1]  # dictionary with metadata like extent, units, etc.
+        if i == 0:
+              break
+        ...
+#+end_src
+
+
 * How to train the model
 
 In ~ezigzag/train.py~ a Variational Autoencoder is trained on the
