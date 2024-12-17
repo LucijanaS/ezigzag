@@ -393,7 +393,7 @@ class HDF5Dataset(Dataset):
         for loc in self.index[item]:
             # fetch sample
             frame_index, key, attr_key = loc
-            sample_arr = self.frame[frame_index][key][frame_index]
+            sample_arr = self.frame[frame_index][key][item]
             sample = torch.Tensor(sample_arr)
             if len(sample) == 2 or (self.n_channels and sample.shape[0] != self.n_channels):
                 sample = sample.view(1, *sample.shape)
@@ -629,16 +629,24 @@ def plot_simpson_samples(indices: list[int]):
 
 if __name__ == "__main__":
     from ezigzag import parse_args
+    import numpy as np
+    from matplotlib import pyplot as plt
 
     config = parse_args()
     config["ckpt_dir"].mkdir(parents=True, exist_ok=True)
     config["results_dir"].mkdir(parents=True, exist_ok=True)
 
-    ds = HDF5Dataset(config["root"], meta_groups="**/metadata/*", collate=True)
-    dl = TrainTestDataLoader(ds, ds, batch_size=8)
+    ds = HDF5Dataset(
+        config["root"],
+        file_key="240818_tng50-1_dm_99_gids.1000.2000.hdf5",
+        meta_groups="**/metadata/*",
+        scheme="surjective",
+        collate=True
+    )
+    dl = TrainTestDataLoader(ds, ds, batch_size=1)
     for i, batch in dl.tqdm():
-        maps = batch[0]
-        info = batch[1]
-        print(maps.shape, info)
-        if i == 0:
+        img = batch[0][0].detach().cpu().numpy()
+        plt.imshow(np.log10(img), cmap="magma")
+        plt.show()
+        if i == 50:
             break
