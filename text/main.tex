@@ -1,0 +1,40 @@
+\documentclass[12pt]{article}
+
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{amsmath}
+
+\title{}
+
+\author{The usual suspects}
+
+\date{January 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+\begin{equation}
+\begin{aligned}
+  x_1 &= D_{01} \theta \\
+  x_2 &= D_{02} \theta - D_{12} \alpha(x_1) \\
+  x_3 &= D_{03} \theta - D_{13} \alpha(x_1) - D_{23} \alpha(x_2)
+\end{aligned}
+\end{equation}
+Checked against \cite{2016MNRAS.456.2210C}.\footnote{The earlier
+incorrect thinking effectively repeated $D_{02}$ and $D_{12}$ in the
+third line, rather than replacing them with $D_{03}$ and $D_{13}$.
+Fortunately in this lens the redshifts are such that the differences
+are fairly small.}
+
+The lens J1721+8842 has \citep{2018MNRAS.479.5060L,2024arXiv241104177D}
+$z_1=0.184$, $z2=1.885$, $z_3=2.38$.
+
+\newcommand{\mnras}{MNRAS}
+
+\bibliographystyle{aa}
+\bibliography{main}
+
+\end{document}
