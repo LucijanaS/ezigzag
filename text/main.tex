@@ -14,23 +14,40 @@
 
 \maketitle
 
-\section{Introduction}
+\section{Ray-tracing with multiple lens planes}
 
+Let us adopt the following notation.
+\begin{itemize}
+\item We associate subscript 0 with the observer, 1 with the
+  lower-redshift lens, 2~with the other lens, and 3~with the source.
+\item We write $D_{01}$ and so on for the various angular-diameter
+  distances.
+\item We write $x_1$ and so on for the physical transverse location of
+  a light ray.
+\item We let $\theta$ be the observed angular position and write
+  $\hat\alpha(x_1)$ for lensing deflection angles.
+\end{itemize}
+The multi-plane lensing equations are then as follows.\footnote{These
+are equivalent to the equations in \cite{2016MNRAS.456.2210C}. The
+earlier incorrect thinking effectively repeated $D_{02}$ and $D_{12}$
+in the third line, rather than replacing them with $D_{03}$ and
+$D_{13}$.  Fortunately in this lens the redshifts are such that the
+differences are fairly small.}
 \begin{equation}
 \begin{aligned}
-  x_1 &= D_{01} \theta \\
-  x_2 &= D_{02} \theta - D_{12} \alpha(x_1) \\
-  x_3 &= D_{03} \theta - D_{13} \alpha(x_1) - D_{23} \alpha(x_2)
+  x_1 &= D_{01} \, \theta \\
+  x_2 &= D_{02} \, \theta - D_{12} \, \hat\alpha(x_1) \\
+  x_3 &= D_{03} \, \theta - D_{13} \, \hat\alpha(x_1)
+                          - D_{23} \, \hat\alpha(x_2)
 \end{aligned}
 \end{equation}
-Checked against \cite{2016MNRAS.456.2210C}.\footnote{The earlier
-incorrect thinking effectively repeated $D_{02}$ and $D_{12}$ in the
-third line, rather than replacing them with $D_{03}$ and $D_{13}$.
-Fortunately in this lens the redshifts are such that the differences
-are fairly small.}
+Here each line traces a ray backwards from the observer.
 
-The lens J1721+8842 has \citep{2018MNRAS.479.5060L,2024arXiv241104177D}
-$z_1=0.184$, $z2=1.885$, $z_3=2.38$.
+
+
+The lens J1721+8842 has $z_1=0.184$, $z2=1.885$, $z_3=2.38$
+\citep{2018MNRAS.479.5060L,2024arXiv241104177D}.
+
 
 \newcommand{\mnras}{MNRAS}
 
